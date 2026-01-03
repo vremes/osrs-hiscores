@@ -1,5 +1,5 @@
 [project]
-name = "osrs-hiscores"
+name = "osrs-hiscores-client"
 version = "0.1.0"
 description = "Python client for Old School RuneScape Hiscores API."
 readme = "README.md"
