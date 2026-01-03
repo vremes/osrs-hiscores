@@ -4,7 +4,7 @@ class Skill(IntEnum):
     """
     Represents skills on Hiscores API.
     """
-    TOTAL = 0
+    OVERALL = 0
     ATTACK = 1
     DEFENCE = 2
     STRENGTH = 3
@@ -25,7 +25,7 @@ class Skill(IntEnum):
     THIEVING = 18
     SLAYER = 19
     FARMING = 20
-    RUNECRAFTING = 21
+    RUNECRAFT = 21
     HUNTER = 22
     CONSTRUCTION = 23
     SAILING = 24

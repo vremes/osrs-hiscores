@@ -1,6 +1,5 @@
 from requests import Session
 from .models import PlayerStats
-from .utils.client import parse_player_stats
 
 
 class HiscoresClient:
@@ -27,8 +26,9 @@ class HiscoresClient:
         :rtype: PlayerStats
         """
         url: str = (
-            f"https://services.runescape.com/m=hiscore_oldschool/index_lite.ws?player={rsn}"
+            f"https://services.runescape.com/m=hiscore_oldschool/index_lite.json?player={rsn}"
         )
         response = self.session.get(url)
         response.raise_for_status()
-        return parse_player_stats(rsn, response.text)
+        response_json = response.json()
+        return PlayerStats.from_json(response_json)
