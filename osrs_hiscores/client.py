@@ -32,3 +32,8 @@ class HiscoresClient:
         response = self.session.get(url)
         response.raise_for_status()
         return parse_player_stats(rsn, response.text)
+
+if __name__ == '__main__':
+    client = HiscoresClient()
+
+    print(client.get_player_stats("Valderrr"))
