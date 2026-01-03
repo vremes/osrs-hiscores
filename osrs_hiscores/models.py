@@ -1,6 +1,6 @@
 from dataclasses import dataclass, fields, asdict
 from typing import Iterator
-from .enums import Skill as SkillEnum
+from .enums import Skill as SkillEnum, Activity as ActivityEnum
 
 
 class Base:
@@ -98,8 +98,7 @@ class SkillsCollection(Base):
 
         for skill_enum in SkillEnum:
             skill_json: dict = skills_json[skill_enum.value]
-            skill_name: str = skill_json["name"]
-            skills_dict[skill_name.lower()] = Skill.from_json(skill_json)
+            skills_dict[skill_enum.name.lower()] = Skill.from_json(skill_json)
 
         return SkillsCollection(**skills_dict)
 
@@ -124,7 +123,7 @@ class Activity(Base):
 
         return cls(id, name, rank, score)
 
-
+@dataclass(frozen=True)
 class ActivitiesCollection(Base):
     """
     Represents a collection of activities.
@@ -237,6 +236,32 @@ class ActivitiesCollection(Base):
     zalcano: Activity
     zulrah: Activity
 
+    def __iter__(self) -> Iterator[Skill]:
+        for field in fields(self):
+            yield getattr(self, field.name)
+
+    @classmethod
+    def from_json(cls, json: dict) -> "ActivitiesCollection":
+        """
+        Creates ActivitiesCollection from JSON data.
+
+        :param json: JSON data as dictionary.
+        :type json: dict
+        :return: ActivitiesCollection data class which contains all activities and their data.
+        :rtype: ActivitiesCollection
+        """
+        activities_json = json["activities"]
+
+        activities_dict: dict[str, Activity] = {}
+
+        for activity_enum in ActivityEnum:
+            activity_json: dict = activities_json[activity_enum.value]
+            activities_dict[activity_enum.name.lower()] = Activity.from_json(
+                activity_json
+            )
+
+        return ActivitiesCollection(**activities_dict)
+
 
 @dataclass(frozen=True)
 class PlayerStats(Base):
@@ -255,4 +280,5 @@ class PlayerStats(Base):
         :rtype: PlayerStats
         """
         skills: SkillsCollection = SkillsCollection.from_json(json)
-        return cls(json["name"], skills)
+        activities: ActivitiesCollection = ActivitiesCollection.from_json(json)
+        return cls(json["name"], skills, activities)
