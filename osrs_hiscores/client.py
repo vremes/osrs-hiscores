@@ -1,6 +1,6 @@
 from requests import Session
-from models import PlayerStats
-from utils.client import parse_player_stats
+from .models import PlayerStats
+from .utils.client import parse_player_stats
 
 
 class HiscoresClient:

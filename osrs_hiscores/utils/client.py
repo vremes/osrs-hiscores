@@ -1,5 +1,5 @@
-from enums import Skill as SkillEnum
-from models import Skill, PlayerStats, SkillsCollection
+from ..enums import Skill as SkillEnum
+from ..models import Skill, PlayerStats, SkillsCollection
 
 
 def parse_player_stats(rsn: str, response_text: str) -> PlayerStats:
