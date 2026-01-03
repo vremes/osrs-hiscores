@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
     { name = "Valtteri Remes" }
 ]
-license = { text = "MIT" }
+license = "MIT"
 requires-python = ">=3.10"
 keywords = ["osrs", "hiscores", "runescape", "api", "client"]
 classifiers = [
