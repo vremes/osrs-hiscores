@@ -21,6 +21,7 @@ class Skill(Base):
     Represents player's skill.
     """
 
+    id: int
     name: str
     rank: int
     level: int
@@ -80,13 +81,14 @@ class SkillsCollection(Base):
         for skill_enum in SkillEnum:
             skill: dict = json_skills[skill_enum.value]
 
+            skill_id: int = skill["id"]
             skill_name: str = skill["name"]
             skill_rank: int = skill["rank"]
             skill_level: int = skill["level"]
             skill_experience: int = skill["xp"]
 
             skills_dict[skill_name.lower()] = Skill(
-                skill_name, skill_rank, skill_level, skill_experience
+                skill_id, skill_name, skill_rank, skill_level, skill_experience
             )
 
         return SkillsCollection(**skills_dict)
