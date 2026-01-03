@@ -7,7 +7,7 @@ Simple OSRS Hiscores client for Python.
 ## Installation
 
 ```bash
-pip install osrs-hiscores
+pip install osrs-hiscores-client
 ```
 
 
