@@ -27,6 +27,24 @@ class Skill(Base):
     level: int
     experience: int
 
+    @classmethod
+    def from_json(cls, json: dict) -> "Skill":
+        """
+        Creates Skill from JSON data.
+
+        :param json: JSON data as dictionary.
+        :type json: dict
+        :return: Skill data class which contains skill data.
+        :rtype: Skill
+        """
+        id: int = json["id"]
+        name: str = json["name"]
+        rank: int = json["rank"]
+        level: int = json["level"]
+        experience: int = json["xp"]
+
+        return cls(id, name, rank, level, experience)
+
 
 @dataclass(frozen=True)
 class SkillsCollection(Base):
@@ -67,29 +85,21 @@ class SkillsCollection(Base):
     @classmethod
     def from_json(cls, json: dict) -> "SkillsCollection":
         """
-        Parses the JSON from hiscores API into SkillsCollection data class.
+        Creates SkillsCollection from JSON data.
 
-        :param json: JSON from Hiscores API.
+        :param json: JSON data as dictionary.
         :type json: dict
         :return: SkillsCollection data class which contains all skills and their data.
         :rtype: SkillsCollection
         """
-        json_skills = json["skills"]
+        skills_json = json["skills"]
 
         skills_dict: dict[str, Skill] = {}
 
         for skill_enum in SkillEnum:
-            skill: dict = json_skills[skill_enum.value]
-
-            skill_id: int = skill["id"]
-            skill_name: str = skill["name"]
-            skill_rank: int = skill["rank"]
-            skill_level: int = skill["level"]
-            skill_experience: int = skill["xp"]
-
-            skills_dict[skill_name.lower()] = Skill(
-                skill_id, skill_name, skill_rank, skill_level, skill_experience
-            )
+            skill_json: dict = skills_json[skill_enum.value]
+            skill_name: str = skill_json["name"]
+            skills_dict[skill_name.lower()] = Skill.from_json(skill_json)
 
         return SkillsCollection(**skills_dict)
 
@@ -101,5 +111,13 @@ class PlayerStats(Base):
 
     @classmethod
     def from_json(cls, json: dict) -> "PlayerStats":
+        """
+        Creates PlayerStats from JSON data.
+
+        :param json: JSON data as dictionary.
+        :type json: dict
+        :return: PlayerStats data class which contains skills.
+        :rtype: PlayerStats
+        """
         skills: SkillsCollection = SkillsCollection.from_json(json)
         return cls(json["name"], skills)
