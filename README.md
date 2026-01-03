@@ -36,7 +36,7 @@ for skill in stats.skills:
 # Player Lynx Titan has Hitpoints (ID: 4) level of 99, 200000000 experience and rank 7
 # ...
 
-# Each object can be turn into dictionary if need.
+# Each object can be turn into dictionary if needed.
 print(stats.skills.cooking.to_dict())
 # {'name': 'Cooking', 'rank': 150, 'level': 99, 'experience': 200000000}
 
