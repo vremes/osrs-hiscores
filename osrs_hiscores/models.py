@@ -105,9 +105,144 @@ class SkillsCollection(Base):
 
 
 @dataclass(frozen=True)
+class Activity(Base):
+    """
+    Represents activity, for example Barrows kill count.
+    """
+
+    id: int
+    name: str
+    rank: int
+    score: int
+
+    @classmethod
+    def from_json(cls, json: dict) -> "Activity":
+        id: int = json["id"]
+        name: str = json["name"]
+        rank: int = json["rank"]
+        score: int = json["score"]
+
+        return cls(id, name, rank, score)
+
+
+class ActivitiesCollection(Base):
+    """
+    Represents a collection of activities.
+    """
+
+    grid_points: Activity
+    league_points: Activity
+    deadman_points: Activity
+
+    bounty_hunter_hunter: Activity
+    bounty_hunter_rogue: Activity
+    bounty_hunter_legacy_hunter: Activity
+    bounty_hunter_legacy_rogue: Activity
+
+    clue_scrolls_all: Activity
+    clue_scrolls_beginner: Activity
+    clue_scrolls_easy: Activity
+    clue_scrolls_medium: Activity
+    clue_scrolls_hard: Activity
+    clue_scrolls_elite: Activity
+    clue_scrolls_master: Activity
+
+    last_man_standing_rank: Activity
+    pvp_arena_rank: Activity
+    soul_wars_zeal: Activity
+    rifts_closed: Activity
+    colosseum_glory: Activity
+    collections_logged: Activity
+
+    abyssal_sire: Activity
+    alchemical_hydra: Activity
+    amoxliatl: Activity
+    araxxor: Activity
+    artio: Activity
+
+    barrows_chests: Activity
+    bryophyta: Activity
+
+    callisto: Activity
+    calvarion: Activity
+    cerberus: Activity
+    chambers_of_xeric: Activity
+    chambers_of_xeric_challenge_mode: Activity
+    chaos_elemental: Activity
+    chaos_fanatic: Activity
+    commander_zilyana: Activity
+    corporeal_beast: Activity
+    crazy_archaeologist: Activity
+
+    dagannoth_prime: Activity
+    dagannoth_rex: Activity
+    dagannoth_supreme: Activity
+    deranged_archaeologist: Activity
+    doom_of_mokhaiotl: Activity
+    duke_sucellus: Activity
+
+    general_graardor: Activity
+    giant_mole: Activity
+    grotesque_guardians: Activity
+
+    hespori: Activity
+
+    kalphite_queen: Activity
+    king_black_dragon: Activity
+    kraken: Activity
+    kree_arra: Activity
+    kril_tsutsaroth: Activity
+
+    lunar_chests: Activity
+
+    mimic: Activity
+
+    nex: Activity
+    nightmare: Activity
+    phosanis_nightmare: Activity
+
+    obor: Activity
+    phantom_muspah: Activity
+
+    sarachnis: Activity
+    scorpia: Activity
+    scurrius: Activity
+    shellbane_gryphon: Activity
+    skotizo: Activity
+    sol_heredit: Activity
+    spindel: Activity
+
+    tempoross: Activity
+    the_gauntlet: Activity
+    the_corrupted_gauntlet: Activity
+    the_hueycoatl: Activity
+    the_leviathan: Activity
+    the_royal_titans: Activity
+    the_whisperer: Activity
+    theatre_of_blood: Activity
+    theatre_of_blood_hard_mode: Activity
+    thermonuclear_smoke_devil: Activity
+    tombs_of_amascut: Activity
+    tombs_of_amascut_expert_mode: Activity
+    tzkal_zuk: Activity
+    tztok_jad: Activity
+
+    vardorvis: Activity
+    venenatis: Activity
+    vetion: Activity
+    vorkath: Activity
+
+    wintertodt: Activity
+    yama: Activity
+    zalcano: Activity
+    zulrah: Activity
+
+
+@dataclass(frozen=True)
 class PlayerStats(Base):
     rsn: str
     skills: SkillsCollection
+    activities: ActivitiesCollection
 
     @classmethod
     def from_json(cls, json: dict) -> "PlayerStats":
