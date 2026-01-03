@@ -58,16 +58,6 @@ class SkillsCollection(Base):
     construction: Skill
     sailing: Skill
 
-    def to_dict(self) -> dict:
-        """
-        Returns the dataclass as dictionary.
-
-        :param self: Description
-        :return: Description
-        :rtype: dict
-        """
-        return asdict(self)
-
     def __iter__(self) -> Iterator[Skill]:
         for field in fields(self):
             yield getattr(self, field.name)
