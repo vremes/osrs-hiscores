@@ -15,12 +15,13 @@ pip install osrs-hiscores-client
 
 ```py
 from osrs_hiscores.client import HiscoresClient
+from osrs_hiscores.enums import PlayerType
 
 rsn = "Lynx Titan"
 
 client = HiscoresClient()
 
-stats = client.get_player_stats(rsn)
+stats = client.get_player_stats(rsn, PlayerType.NORMAL)
 
 print(f"Player {stats.rsn} has {stats.skills.agility.name} (ID: {stats.skills.agility.id}) level of {stats.skills.agility.level}, {stats.skills.agility.experience} experience and rank {stats.skills.agility.rank}.")
 # Player Lynx Titan has Agility (ID: 17) level of 99, 200000000 experience and rank 24.

@@ -144,3 +144,12 @@ class Activity(IntEnum):
     YAMA = 85
     ZALCANO = 86
     ZULRAH = 87
+
+class PlayerType(IntEnum):
+    """
+    Represents the player type.
+    """
+    NORMAL = 0
+    IRONMAN = 1
+    HARDCORE_IRONMAN = 2
+    ULTIMATE_IRONMAN = 3
