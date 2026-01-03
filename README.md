@@ -22,8 +22,8 @@ client = HiscoresClient()
 
 stats = client.get_player_stats(rsn)
 
-print(f"Player {stats.rsn} has agility (ID: {stats.skills.agility.id}) level of {stats.skills.agility.level}, {stats.skills.agility.experience} experience and rank {stats.skills.agility.rank}.")
-# Player Lynx Titan has agility (ID: 17) level of 99, 200000000 experience and rank 24.
+print(f"Player {stats.rsn} has {stats.skills.agility.name} (ID: {stats.skills.agility.id}) level of {stats.skills.agility.level}, {stats.skills.agility.experience} experience and rank {stats.skills.agility.rank}.")
+# Player Lynx Titan has Agility (ID: 17) level of 99, 200000000 experience and rank 24.
 
 # You can also loop all skills if you want to!
 for skill in stats.skills:
@@ -39,4 +39,17 @@ for skill in stats.skills:
 # Each object can be turn into dictionary if need.
 print(stats.skills.cooking.to_dict())
 # {'name': 'Cooking', 'rank': 150, 'level': 99, 'experience': 200000000}
+
+# You can also access the activity statistics.
+print(f"Player {stats.rsn} has {stats.activities.barrows_chests.name} (ID: {stats.activities.barrows_chests.id}) kill count of {stats.activities.barrows_chests.score} and rank {stats.activities.barrows_chests.rank}.")
+# Player Lynx Titan has Barrows (ID: 25) kill count of -1 and rank -1.
+
+for activity in stats.activities:
+    print(f"Player {stats.rsn} has {activity.name} (ID: {activity.id}) score of {activity.score} and rank {activity.rank}")
+
+# Player Lynx Titan has Barrows (ID: 25) score of -1 and rank -1.
+# Player Lynx Titan has Grid Points (ID: 0) score of -1 and rank -1
+# Player Lynx Titan has League Points (ID: 1) score of -1 and rank -1
+# Player Lynx Titan has Deadman Points (ID: 2) score of -1 and rank -1
+# ...
 ```
