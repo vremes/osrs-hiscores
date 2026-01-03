@@ -17,6 +17,12 @@ dependencies = [
     "requests>=2.31.0"
 ]
 
+[project.urls]
+Homepage = "https://github.com/vremes/osrs-hiscores"
+Documentation = "https://github.com/vremes/osrs-hiscores"
+Repository = "https://github.com/vremes/osrs-hiscores.git"
+Issues = "https://github.com/vremes/osrs-hiscores/issues"
+
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
