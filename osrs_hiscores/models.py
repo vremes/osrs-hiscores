@@ -4,9 +4,9 @@ from .enums import Skill as SkillEnum, Activity as ActivityEnum
 
 
 @dataclass(frozen=True)
-class Base:
+class ToDictMixin:
     """
-    Base class for models.
+    Provides to_dict method to dataclass.
     """
 
     def to_dict(self):
@@ -17,7 +17,7 @@ class Base:
 
 
 @dataclass(frozen=True)
-class Skill(Base):
+class Skill(ToDictMixin):
     """
     Represents player's skill.
     """
@@ -48,7 +48,7 @@ class Skill(Base):
 
 
 @dataclass(frozen=True)
-class SkillsCollection(Base):
+class SkillsCollection(ToDictMixin):
     """
     Represents a collection of skills.
     """
@@ -105,7 +105,7 @@ class SkillsCollection(Base):
 
 
 @dataclass(frozen=True)
-class Activity(Base):
+class Activity(ToDictMixin):
     """
     Represents activity, for example Barrows kill count.
     """
@@ -124,8 +124,9 @@ class Activity(Base):
 
         return cls(id, name, rank, score)
 
+
 @dataclass(frozen=True)
-class ActivitiesCollection(Base):
+class ActivitiesCollection(ToDictMixin):
     """
     Represents a collection of activities.
     """
@@ -265,7 +266,7 @@ class ActivitiesCollection(Base):
 
 
 @dataclass(frozen=True)
-class PlayerStats(Base):
+class PlayerStats(ToDictMixin):
     rsn: str
     skills: SkillsCollection
     activities: ActivitiesCollection
