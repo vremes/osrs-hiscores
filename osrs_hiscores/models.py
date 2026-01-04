@@ -238,7 +238,7 @@ class ActivitiesCollection(ToDictMixin):
     zalcano: Activity
     zulrah: Activity
 
-    def __iter__(self) -> Iterator[Skill]:
+    def __iter__(self) -> Iterator[Activity]:
         for field in fields(self):
             yield getattr(self, field.name)
 
