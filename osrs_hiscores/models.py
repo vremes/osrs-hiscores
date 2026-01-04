@@ -1,22 +1,23 @@
-from dataclasses import dataclass, fields, asdict
-from typing import Iterator
+from dataclasses import dataclass, fields, asdict, is_dataclass
+from typing import Iterator, Any
 from .enums import Skill as SkillEnum, Activity as ActivityEnum
 
-
-class Base:
+class ToDictMixin:
     """
-    Base class for models.
+    Provides to_dict method to dataclass.
     """
 
-    def to_dict(self):
+    def to_dict(self) -> dict[str, Any]:
         """
         Returns the dataclass as a dictionary.
         """
+        if not is_dataclass(self):
+            return {}
         return asdict(self)
 
 
 @dataclass(frozen=True)
-class Skill(Base):
+class Skill(ToDictMixin):
     """
     Represents player's skill.
     """
@@ -47,7 +48,7 @@ class Skill(Base):
 
 
 @dataclass(frozen=True)
-class SkillsCollection(Base):
+class SkillsCollection(ToDictMixin):
     """
     Represents a collection of skills.
     """
@@ -104,7 +105,7 @@ class SkillsCollection(Base):
 
 
 @dataclass(frozen=True)
-class Activity(Base):
+class Activity(ToDictMixin):
     """
     Represents activity, for example Barrows kill count.
     """
@@ -123,8 +124,9 @@ class Activity(Base):
 
         return cls(id, name, rank, score)
 
+
 @dataclass(frozen=True)
-class ActivitiesCollection(Base):
+class ActivitiesCollection(ToDictMixin):
     """
     Represents a collection of activities.
     """
@@ -236,7 +238,7 @@ class ActivitiesCollection(Base):
     zalcano: Activity
     zulrah: Activity
 
-    def __iter__(self) -> Iterator[Skill]:
+    def __iter__(self) -> Iterator[Activity]:
         for field in fields(self):
             yield getattr(self, field.name)
 
@@ -264,7 +266,7 @@ class ActivitiesCollection(Base):
 
 
 @dataclass(frozen=True)
-class PlayerStats(Base):
+class PlayerStats(ToDictMixin):
     rsn: str
     skills: SkillsCollection
     activities: ActivitiesCollection
