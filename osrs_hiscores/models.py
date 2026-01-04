@@ -3,6 +3,7 @@ from typing import Iterator
 from .enums import Skill as SkillEnum, Activity as ActivityEnum
 
 
+@dataclass(frozen=True)
 class Base:
     """
     Base class for models.
