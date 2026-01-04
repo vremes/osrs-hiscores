@@ -15,42 +15,34 @@ pip install osrs-hiscores-client
 
 ```py
 from osrs_hiscores.client import HiscoresClient
-from osrs_hiscores.enums import PlayerType
+from osrs_hiscores.enums import PlayerType, Skill, Activity
 
 rsn = "Lynx Titan"
 
 client = HiscoresClient()
 
+# PlayerType also has PlayerType.IRONMAN, PlayerType.HARDCORE_IRONMAN and PlayerType.ULTIMATE_IRONMAN
 stats = client.get_player_stats(rsn, PlayerType.NORMAL)
 
-print(f"Player {stats.rsn} has {stats.skills.agility.name} (ID: {stats.skills.agility.id}) level of {stats.skills.agility.level}, {stats.skills.agility.experience} experience and rank {stats.skills.agility.rank}.")
-# Player Lynx Titan has Agility (ID: 17) level of 99, 200000000 experience and rank 24.
+# You can access specific skill using ID.
+agility_skill = stats.get_skill_by_id(Skill.AGILITY)
 
-# You can also loop all skills if you want to!
-for skill in stats.skills:
-    print(f"Player {stats.rsn} has {skill.name} (ID: {skill.id}) level of {skill.level}, {skill.experience} experience and rank {skill.rank}")
+if agility_skill is not None:
+    print(f"Player {stats.rsn} has agility level of {agility_skill.level}, {agility_skill.experience} experience and rank {agility_skill.rank}.")
+    # Player Lynx Titan has agility level of 99, 200000000 experience and rank 24.
 
-# Player Lynx Titan has Overall (ID: 0) level of 2278, 4600000000 experience and rank 83146
-# Player Lynx Titan has Attack (ID: 1) level of 99, 200000000 experience and rank 15
-# Player Lynx Titan has Defence (ID: 2) level of 99, 200000000 experience and rank 28
-# Player Lynx Titan has Strength (ID: 3) level of 99, 200000000 experience and rank 18
-# Player Lynx Titan has Hitpoints (ID: 4) level of 99, 200000000 experience and rank 7
-# ...
+# You can loop all skills.
+for skill in stats.skills.values():
+    print(f"Player {stats.rsn} has {skill.name} level of {skill.level}, {skill.experience} experience and rank {skill.rank}.")
 
-# Each object can be turn into dictionary if needed.
-print(stats.skills.cooking.to_dict())
-# {'name': 'Cooking', 'rank': 150, 'level': 99, 'experience': 200000000}
+# You can access specific activity using ID.
+jad_activity = stats.get_activity_by_id(Activity.TZTOK_JAD)
 
-# You can also access the activity statistics.
-print(f"Player {stats.rsn} has {stats.activities.barrows_chests.name} (ID: {stats.activities.barrows_chests.id}) kill count of {stats.activities.barrows_chests.score} and rank {stats.activities.barrows_chests.rank}.")
-# Player Lynx Titan has Barrows (ID: 25) kill count of -1 and rank -1.
+if jad_activity is not None:
+    print(f"Player {stats.rsn} has {jad_activity.score} Jad KC and rank {jad_activity.rank}.")
+    # Player Lynx Titan has activity TzTok-Jad score of 186 and rank 375.
 
-for activity in stats.activities:
-    print(f"Player {stats.rsn} has {activity.name} (ID: {activity.id}) score of {activity.score} and rank {activity.rank}")
-
-# Player Lynx Titan has Barrows (ID: 25) score of -1 and rank -1.
-# Player Lynx Titan has Grid Points (ID: 0) score of -1 and rank -1
-# Player Lynx Titan has League Points (ID: 1) score of -1 and rank -1
-# Player Lynx Titan has Deadman Points (ID: 2) score of -1 and rank -1
-# ...
+# You can also loop all activities.
+for activity in stats.activities.values():
+    print(f"Player {stats.rsn} has activity {activity.name} score of {activity.score} and rank {activity.rank}.")
 ```
