@@ -1,18 +1,18 @@
-from dataclasses import dataclass, fields, asdict
-from typing import Iterator
+from dataclasses import dataclass, fields, asdict, is_dataclass
+from typing import Iterator, Any
 from .enums import Skill as SkillEnum, Activity as ActivityEnum
 
-
-@dataclass(frozen=True)
 class ToDictMixin:
     """
     Provides to_dict method to dataclass.
     """
 
-    def to_dict(self):
+    def to_dict(self) -> dict[str, Any]:
         """
         Returns the dataclass as a dictionary.
         """
+        if not is_dataclass(self):
+            return {}
         return asdict(self)
 
 
