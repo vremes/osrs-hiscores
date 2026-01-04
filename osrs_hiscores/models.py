@@ -53,9 +53,8 @@ class Skill(ToDictMixin):
 
         skills_dict: dict[int, Skill] = {}
 
-        for skill_enum in SkillEnum:
-            skill_json: dict = skills_json[skill_enum.value]
-            skills_dict[skill_enum.value] = Skill.from_json(skill_json)
+        for skill in skills_json:
+            skills_dict[skill["id"]] = Skill.from_json(skill)
 
         return skills_dict
 
@@ -82,13 +81,12 @@ class Activity(ToDictMixin):
 
     @classmethod
     def dict_from_json(cls, json: dict) -> dict[int, "Activity"]:
-        skills_json = json["activities"]
+        activities_json = json["activities"]
 
         activities_dict: dict[int, Activity] = {}
 
-        for activity_enum in ActivityEnum:
-            skill_json: dict = skills_json[activity_enum.value]
-            activities_dict[activity_enum.value] = Activity.from_json(skill_json)
+        for activity in activities_json:
+            activities_dict[activity["id"]] = Activity.from_json(activity)
 
         return activities_dict
 
