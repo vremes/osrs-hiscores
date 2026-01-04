@@ -3,9 +3,7 @@ from osrs_hiscores.client import get_player_stats_url
 from osrs_hiscores.enums import PlayerType, Skill as SkillEnum, Activity as ActivityEnum
 from osrs_hiscores.models import (
     Skill,
-    SkillsCollection,
     Activity,
-    ActivitiesCollection,
     PlayerStats,
 )
 
@@ -763,30 +761,6 @@ def test_skill_parsing():
     assert skill.experience == 200000000
 
 
-def test_skill_collection_parsing():
-    json_data = json.loads(TEST_JSON_DATA)
-
-    skills_collection = SkillsCollection.from_json(json_data)
-
-    skills_collection_skills_dict = skills_collection.to_dict()
-
-    assert len(skills_collection_skills_dict) == len(SkillEnum)
-    assert len(skills_collection_skills_dict) == 25
-    assert skills_collection.fishing.name == "Fishing"
-    assert skills_collection.fishing.rank == 9
-
-    for skill in skills_collection:
-        skill_in_json = next(
-            (item for item in json_data["skills"] if item["id"] == skill.id)
-        )
-
-        assert skill.id == skill_in_json["id"]
-        assert skill.name == skill_in_json["name"]
-        assert skill.rank == skill_in_json["rank"]
-        assert skill.level == skill_in_json["level"]
-        assert skill.experience == skill_in_json["xp"]
-
-
 def test_activity_parsing():
     json_data = json.loads(TEST_JSON_DATA)
 
@@ -802,34 +776,34 @@ def test_activity_parsing():
     assert activity.score == 22
 
 
-def test_activities_collection_parsing():
-    json_data = json.loads(TEST_JSON_DATA)
-
-    activities_collection = ActivitiesCollection.from_json(json_data)
-
-    activities_collection_dict = activities_collection.to_dict()
-
-    assert len(activities_collection_dict) == len(ActivityEnum)
-    assert len(activities_collection_dict) == 88
-    assert activities_collection.clue_scrolls_all.name == "Clue Scrolls (all)"
-    assert activities_collection.clue_scrolls_all.rank == 1060210
-
-    for activity in activities_collection:
-        activity_in_json = next(
-            (item for item in json_data["activities"] if item["id"] == activity.id)
-        )
-
-        assert activity.id == activity_in_json["id"]
-        assert activity.name == activity_in_json["name"]
-        assert activity.rank == activity_in_json["rank"]
-        assert activity.score == activity_in_json["score"]
-
-
 def test_player_stats_parsing():
     json_data = json.loads(TEST_JSON_DATA)
 
     player_stats = PlayerStats.from_json(json_data)
 
+    abyssal_sire_activity_by_enum = player_stats.get_activity_by_id(
+        ActivityEnum.ABYSSAL_SIRE
+    )
+
+    abyssal_sire_activity_by_int = player_stats.get_activity_by_id(20)
+
+    attack_skill_by_enum = player_stats.get_skill_by_id(SkillEnum.ATTACK)
+
+    attack_skill_by_int = player_stats.get_skill_by_id(1)
+
     assert player_stats.rsn == "Lynx Titan"
+
+    assert abyssal_sire_activity_by_enum is not None
+    assert abyssal_sire_activity_by_enum.name == "Abyssal Sire"
+
+    assert abyssal_sire_activity_by_int is not None
+    assert abyssal_sire_activity_by_int.name == "Abyssal Sire"
+
+    assert attack_skill_by_enum is not None
+    assert attack_skill_by_enum.name == "Attack"
+
+    assert attack_skill_by_int is not None
+    assert attack_skill_by_int.name == "Attack"
+
     assert len(player_stats.to_dict()["skills"]) == len(json_data["skills"])
     assert len(player_stats.to_dict()["activities"]) == len(json_data["activities"])
