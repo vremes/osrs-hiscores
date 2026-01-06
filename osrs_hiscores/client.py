@@ -38,33 +38,35 @@ class HiscoresClient:
         return PlayerStats.from_json(response_json)
 
 
-def get_player_stats_url(rsn: str, player_type: PlayerType) -> str:
+def get_player_stats_url(player_name: str, player_type: PlayerType) -> str:
     """
     Returns final API URL for getting player stats according to player_type.
 
-    :param rsn: Player name.
-    :type rsn: str
+    :param player_name: Player name.
+    :type player_name: str
     :param player_type: Player type (e.g. ironman, hardcore ironman etc.)
     :type player_type: PlayerType
     :return: API URL.
     :rtype: str
     """
-    rsn: str = quote(rsn)
+    player_name_quoted: str = quote(player_name)
 
     match player_type:
         case PlayerType.NORMAL:
-            return f"https://secure.runescape.com/m=hiscore_oldschool/index_lite.json?player={rsn}"
+            player_mode = "hiscore_oldschool"
         case PlayerType.IRONMAN:
-            return f"https://secure.runescape.com/m=hiscore_oldschool_ironman/index_lite.json?player={rsn}"
+            player_mode = "hiscore_oldschool_ironman"
         case PlayerType.HARDCORE_IRONMAN:
-            return f"https://secure.runescape.com/m=hiscore_oldschool_hardcore_ironman/index_lite.json?player={rsn}"
+            player_mode = "hiscore_oldschool_hardcore_ironman"
         case PlayerType.ULTIMATE_IRONMAN:
-            return f"https://secure.runescape.com/m=hiscore_oldschool_ultimate/index_lite.json?player={rsn}"
+            player_mode = "hiscore_oldschool_ultimate"
         case PlayerType.DEADMAN_MODE:
-            return f"https://secure.runescape.com/m=hiscore_oldschool_deadman/index_lite.json?player={rsn}"
+            player_mode = "hiscore_oldschool_deadman"
         case PlayerType.SEASONAL:
-            return f"https://secure.runescape.com/m=hiscore_oldschool_seasonal/index_lite.json?player={rsn}"
+            player_mode = "hiscore_oldschool_seasonal"
         case PlayerType.TOURNAMENT:
-            return f"https://secure.runescape.com/m=hiscore_oldschool_tournament/index_lite.json?player={rsn}"
+            player_mode = "hiscore_oldschool_tournament"
         case _:
             raise ValueError(f"Unsupported player type: {player_type}")
+
+    return f"https://secure.runescape.com/m={player_mode}/index_lite.json?player={player_name_quoted}"
