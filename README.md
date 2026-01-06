@@ -21,7 +21,7 @@ rsn = "Lynx Titan"
 
 client = HiscoresClient()
 
-# PlayerType also has PlayerType.IRONMAN, PlayerType.HARDCORE_IRONMAN and PlayerType.ULTIMATE_IRONMAN
+# PlayerType also has PlayerType.IRONMAN, PlayerType.HARDCORE_IRONMAN and PlayerType.ULTIMATE_IRONMAN, PlayerType.DEADMAN_MODE, PlayerType.SEASONAL and PlayerType.TOURNAMENT
 stats = client.get_player_stats(rsn, PlayerType.NORMAL)
 
 # You can access specific skill using ID.
