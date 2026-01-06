@@ -728,6 +728,9 @@ def test_stats_url_selection():
     ironman_player_url = get_player_stats_url(rsn, PlayerType.IRONMAN)
     hardcore_ironman_player_url = get_player_stats_url(rsn, PlayerType.HARDCORE_IRONMAN)
     ultimate_ironman_player_url = get_player_stats_url(rsn, PlayerType.ULTIMATE_IRONMAN)
+    deadman_mode_player_url = get_player_stats_url(rsn, PlayerType.DEADMAN_MODE)
+    seasonal_player_url = get_player_stats_url(rsn, PlayerType.SEASONAL)
+    tournament_player_url = get_player_stats_url(rsn, PlayerType.TOURNAMENT)
 
     assert (
         normal_player_url
@@ -744,6 +747,18 @@ def test_stats_url_selection():
     assert (
         ultimate_ironman_player_url
         == "https://secure.runescape.com/m=hiscore_oldschool_ultimate/index_lite.json?player=Example%20RSN"
+    )
+    assert (
+        deadman_mode_player_url
+        == "https://secure.runescape.com/m=hiscore_oldschool_deadman/index_lite.json?player=Example%20RSN"
+    )
+    assert (
+        seasonal_player_url
+        == "https://secure.runescape.com/m=hiscore_oldschool_seasonal/index_lite.json?player=Example%20RSN"
+    )
+    assert (
+        tournament_player_url
+        == "https://secure.runescape.com/m=hiscore_oldschool_tournament/index_lite.json?player=Example%20RSN"
     )
 
 
@@ -779,7 +794,7 @@ def test_activity_parsing():
 def test_player_stats_parsing():
     json_data = json.loads(TEST_JSON_DATA)
 
-    player_stats = PlayerStats.from_json(json_data)
+    player_stats = PlayerStats.from_json(PlayerType.NORMAL, json_data)
 
     abyssal_sire_activity_by_enum = player_stats.get_activity_by_id(
         ActivityEnum.ABYSSAL_SIRE
@@ -791,7 +806,8 @@ def test_player_stats_parsing():
 
     attack_skill_by_int = player_stats.get_skill_by_id(1)
 
-    assert player_stats.rsn == "Lynx Titan"
+    assert player_stats.name == "Lynx Titan"
+    assert player_stats.type == PlayerType.NORMAL
 
     assert abyssal_sire_activity_by_enum is not None
     assert abyssal_sire_activity_by_enum.name == "Abyssal Sire"
