@@ -148,7 +148,7 @@ class Activity(IntEnum):
 
 class PlayerType(IntEnum):
     """
-    Represents the player type.
+    Represents the player type on Hiscores.
     """
 
     NORMAL = 0
@@ -157,3 +157,4 @@ class PlayerType(IntEnum):
     ULTIMATE_IRONMAN = 3
     DEADMAN_MODE = 4
     SEASONAL = 5
+    TOURNAMENT = 6
