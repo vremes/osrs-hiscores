@@ -19,23 +19,23 @@ class HiscoresClient:
         self.session = session or Session()
 
     def get_player_stats(
-        self, rsn: str, player_type: PlayerType = PlayerType.NORMAL
+        self, player_name: str, player_type: PlayerType = PlayerType.NORMAL
     ) -> PlayerStats:
         """
         Returns player's stats from hiscores API as PlayerStats dataclass.
 
-        :param rsn: Player name (e.g. 'Zezima')
-        :type rsn: str
+        :param player_name: Player name (e.g. 'Zezima')
+        :type player_name: str
         :param player_type: Player type (normal, ironman, hardcore ironman or ultimate ironman)
         :type player_type: PlayerType
-        :return: PlayerStats dataclass which includes player's RSN and skills.
+        :return: PlayerStats dataclass which includes player's name, skills and activities.
         :rtype: PlayerStats
         """
-        url: str = get_player_stats_url(rsn, player_type)
+        url: str = get_player_stats_url(player_name, player_type)
         response = self.session.get(url)
         response.raise_for_status()
         response_json = response.json()
-        return PlayerStats.from_json(response_json)
+        return PlayerStats.from_json(player_type, response_json)
 
 
 def get_player_stats_url(player_name: str, player_type: PlayerType) -> str:

@@ -794,7 +794,7 @@ def test_activity_parsing():
 def test_player_stats_parsing():
     json_data = json.loads(TEST_JSON_DATA)
 
-    player_stats = PlayerStats.from_json(json_data)
+    player_stats = PlayerStats.from_json(PlayerType.NORMAL, json_data)
 
     abyssal_sire_activity_by_enum = player_stats.get_activity_by_id(
         ActivityEnum.ABYSSAL_SIRE
@@ -806,7 +806,8 @@ def test_player_stats_parsing():
 
     attack_skill_by_int = player_stats.get_skill_by_id(1)
 
-    assert player_stats.rsn == "Lynx Titan"
+    assert player_stats.name == "Lynx Titan"
+    assert player_stats.type == PlayerType.NORMAL
 
     assert abyssal_sire_activity_by_enum is not None
     assert abyssal_sire_activity_by_enum.name == "Abyssal Sire"

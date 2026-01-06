@@ -1,6 +1,6 @@
 from dataclasses import dataclass, asdict, is_dataclass
 from typing import Any
-from .enums import Skill as SkillEnum, Activity as ActivityEnum
+from .enums import Skill as SkillEnum, Activity as ActivityEnum, PlayerType
 
 
 class ToDictMixin:
@@ -93,12 +93,13 @@ class Activity(ToDictMixin):
 
 @dataclass(frozen=True)
 class PlayerStats(ToDictMixin):
-    rsn: str
+    name: str
+    type: PlayerType
     skills: dict[int, Skill]
     activities: dict[int, Activity]
 
     @classmethod
-    def from_json(cls, json: dict) -> "PlayerStats":
+    def from_json(cls, type: PlayerType, json: dict) -> "PlayerStats":
         """
         Creates PlayerStats from JSON data.
 
@@ -109,7 +110,7 @@ class PlayerStats(ToDictMixin):
         """
         skills: dict[int, Skill] = Skill.dict_from_json(json)
         activities: dict[int, Activity] = Activity.dict_from_json(json)
-        return cls(json["name"], skills, activities)
+        return cls(json["name"], type, skills, activities)
 
     def get_skill_by_id(self, skill_id: SkillEnum | int) -> Skill | None:
         """
