@@ -30,26 +30,26 @@ class Skill(ToDictMixin):
     experience: int
 
     @classmethod
-    def from_json(cls, json: dict) -> "Skill":
+    def from_json(cls, data: dict) -> "Skill":
         """
         Creates Skill from JSON data.
 
-        :param json: JSON data as dictionary.
-        :type json: dict
+        :param data: JSON data as dictionary.
+        :type data: dict
         :return: Skill data class which contains skill data.
         :rtype: Skill
         """
-        id: int = json["id"]
-        name: str = json["name"]
-        rank: int = json["rank"]
-        level: int = json["level"]
-        experience: int = json["xp"]
+        id: int = data["id"]
+        name: str = data["name"]
+        rank: int = data["rank"]
+        level: int = data["level"]
+        experience: int = data["xp"]
 
         return cls(id, name, rank, level, experience)
 
     @classmethod
-    def dict_from_json(cls, json: dict) -> dict[int, "Skill"]:
-        skills_json = json["skills"]
+    def skills_from_json(cls, data: dict) -> dict[int, "Skill"]:
+        skills_json = data["skills"]
 
         skills_dict: dict[int, Skill] = {}
 
@@ -71,17 +71,17 @@ class Activity(ToDictMixin):
     score: int
 
     @classmethod
-    def from_json(cls, json: dict) -> "Activity":
-        id: int = json["id"]
-        name: str = json["name"]
-        rank: int = json["rank"]
-        score: int = json["score"]
+    def from_json(cls, data: dict) -> "Activity":
+        id: int = data["id"]
+        name: str = data["name"]
+        rank: int = data["rank"]
+        score: int = data["score"]
 
         return cls(id, name, rank, score)
 
     @classmethod
-    def dict_from_json(cls, json: dict) -> dict[int, "Activity"]:
-        activities_json = json["activities"]
+    def activities_from_json(cls, data: dict) -> dict[int, "Activity"]:
+        activities_json = data["activities"]
 
         activities_dict: dict[int, Activity] = {}
 
@@ -99,18 +99,18 @@ class PlayerStats(ToDictMixin):
     activities: dict[int, Activity]
 
     @classmethod
-    def from_json(cls, type: PlayerType, json: dict) -> "PlayerStats":
+    def from_json(cls, type: PlayerType, data: dict) -> "PlayerStats":
         """
         Creates PlayerStats from JSON data.
 
-        :param json: JSON data as dictionary.
-        :type json: dict
+        :param data: JSON data as dictionary.
+        :type data: dict
         :return: PlayerStats data class which contains skills.
         :rtype: PlayerStats
         """
-        skills: dict[int, Skill] = Skill.dict_from_json(json)
-        activities: dict[int, Activity] = Activity.dict_from_json(json)
-        return cls(json["name"], type, skills, activities)
+        skills: dict[int, Skill] = Skill.skills_from_json(data)
+        activities: dict[int, Activity] = Activity.activities_from_json(data)
+        return cls(data["name"], type, skills, activities)
 
     def get_skill_by_id(self, skill_id: SkillEnum | int) -> Skill | None:
         """
