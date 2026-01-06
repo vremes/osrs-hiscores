@@ -62,5 +62,7 @@ def get_player_stats_url(rsn: str, player_type: PlayerType) -> str:
             return f"https://secure.runescape.com/m=hiscore_oldschool_ultimate/index_lite.json?player={rsn}"
         case PlayerType.DEADMAN_MODE:
             return f"https://secure.runescape.com/m=hiscore_oldschool_deadman/index_lite.json?player={rsn}"
+        case PlayerType.SEASONAL:
+            return f"https://secure.runescape.com/m=hiscore_oldschool_seasonal/index_lite.json?player={rsn}"
         case _:
             raise ValueError(f"Unsupported player type: {player_type}")

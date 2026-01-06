@@ -156,3 +156,4 @@ class PlayerType(IntEnum):
     HARDCORE_IRONMAN = 2
     ULTIMATE_IRONMAN = 3
     DEADMAN_MODE = 4
+    SEASONAL = 5
