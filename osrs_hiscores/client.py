@@ -26,7 +26,7 @@ class HiscoresClient:
 
         :param player_name: Player name (e.g. 'Zezima')
         :type player_name: str
-        :param player_type: Player type (normal, ironman, hardcore ironman or ultimate ironman)
+        :param player_type: Player type (normal, ironman, hardcore ironman, ultimate ironman, deadman mode, seasonal or tournament)
         :type player_type: PlayerType
         :return: PlayerStats dataclass which includes player's name, skills and activities.
         :rtype: PlayerStats

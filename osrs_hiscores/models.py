@@ -99,10 +99,12 @@ class PlayerStats(ToDictMixin):
     activities: dict[int, Activity]
 
     @classmethod
-    def from_json(cls, type: PlayerType, data: dict) -> "PlayerStats":
+    def from_json(cls, player_type: PlayerType, data: dict) -> "PlayerStats":
         """
         Creates PlayerStats from JSON data.
 
+        :param player_type: Player type the stats were fetched for.
+        :type player_type: PlayerType
         :param data: JSON data as dictionary.
         :type data: dict
         :return: PlayerStats data class which contains skills.
@@ -110,7 +112,7 @@ class PlayerStats(ToDictMixin):
         """
         skills: dict[int, Skill] = Skill.skills_from_json(data)
         activities: dict[int, Activity] = Activity.activities_from_json(data)
-        return cls(data["name"], type, skills, activities)
+        return cls(data["name"], player_type, skills, activities)
 
     def get_skill_by_id(self, skill_id: SkillEnum | int) -> Skill | None:
         """
