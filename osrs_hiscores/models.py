@@ -103,6 +103,8 @@ class PlayerStats(ToDictMixin):
         """
         Creates PlayerStats from JSON data.
 
+        :param type: Player type the stats were fetched for.
+        :type type: PlayerType
         :param data: JSON data as dictionary.
         :type data: dict
         :return: PlayerStats data class which contains skills.
